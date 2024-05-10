@@ -3,6 +3,7 @@ package com.asadullah.handyutils
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
+import android.util.DisplayMetrics
 import android.widget.Toast
 
 fun Context.copyToClipboard(text: CharSequence, shouldShowToast: Boolean = false) {
@@ -20,3 +21,6 @@ fun Context.showToast(text: CharSequence, length: Int = Toast.LENGTH_SHORT) {
 
 fun Context.getScreenWidth() = resources.displayMetrics.widthPixels
 fun Context.getScreenHeight() = resources.displayMetrics.heightPixels
+
+fun Context.toDp(px: Int) = px / (resources.displayMetrics.densityDpi / DisplayMetrics.DENSITY_DEFAULT)
+fun Context.toPixel(dp: Int) = dp * (resources.displayMetrics.densityDpi / DisplayMetrics.DENSITY_DEFAULT)
