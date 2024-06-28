@@ -12,10 +12,9 @@ fun String?.toNullIfEmptyOrBlank(): String? {
     return if (isNullOrEmptyOrBlank()) null else this
 }
 
-inline fun String?.ifNeitherNullNorEmptyNorBlank(provider: (String) -> Unit): String? {
+inline fun <T> String?.ifNeitherNullNorEmptyNorBlank(provider: (String) -> T?): T? {
     return if (isNeitherNullNorEmptyNorBlank()) {
         provider(this!!)
-        this
     } else null
 }
 
