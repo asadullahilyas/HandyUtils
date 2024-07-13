@@ -28,13 +28,13 @@ allprojects {
 ### Groovy
 ```` Groovy
 dependencies {
-    implementation 'com.github.asadullahilyas:HandyUtils:0.0.7'
+    implementation 'com.github.asadullahilyas:HandyUtils:0.0.10'
 }
 ````
 
 ### Kotlin
 ``` Kotlin
 dependencies {
-    implementation("com.github.asadullahilyas:HandyUtils:0.0.7")
+    implementation("com.github.asadullahilyas:HandyUtils:0.0.10")
 }
 ```
