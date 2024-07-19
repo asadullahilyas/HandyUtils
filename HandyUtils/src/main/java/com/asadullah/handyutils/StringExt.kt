@@ -22,6 +22,21 @@ fun String.capitalizeWords() = this.split(" ").joinToString(" ") { word -> word.
 
 fun String?.removeSpaces() = this?.replace(" ", "")
 
+/**
+ * Convert the given string into a string that only contains letters.
+ */
+fun String?.toLetters() = this?.filter { it.isLetter() }
+
+/**
+ * Convert the given string into a string that only contains digits.
+ */
+fun String?.toDigits() = this?.filter { it.isDigit() }
+
+/**
+ * Convert the given string into a string that only contains letters or digits.
+ */
+fun String?.toLettersOrDigits() = this?.filter { it.isLetterOrDigit() }
+
 @RequiresApi(Build.VERSION_CODES.O)
 fun String.decodeFromBase64String(): ByteArray {
     return Base64.getDecoder().decode(this)
