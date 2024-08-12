@@ -33,6 +33,14 @@ fun String?.toLetters() = this?.filter { it.isLetter() }
 fun String?.toDigits() = this?.filter { it.isDigit() }
 
 /**
+ * Convert the given string into a string that only contains digits or points.
+ * And example would be:
+ *
+ * "13.98 m/s".toDigitsWithPoint() would return "13.98"
+ */
+fun String?.toDigitsWithPoint() = this?.filter { it.isDigit() || it == '.' }
+
+/**
  * Convert the given string into a string that only contains letters or digits.
  */
 fun String?.toLettersOrDigits() = this?.filter { it.isLetterOrDigit() }
