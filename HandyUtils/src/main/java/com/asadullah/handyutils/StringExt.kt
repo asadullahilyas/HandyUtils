@@ -18,7 +18,7 @@ inline fun <T> String?.ifNeitherNullNorEmptyNorBlank(provider: (String) -> T?): 
     } else null
 }
 
-fun String.capitalizeWords() = this.split(" ").joinToString(" ") { word -> word.replaceFirstChar { c -> c.uppercase() } }
+fun String.capitalizeWords() = this.lowercase().split(" ").joinToString(" ") { word -> word.replaceFirstChar { c -> c.uppercase() } }
 
 fun String?.removeSpaces() = this?.replace(" ", "")
 
