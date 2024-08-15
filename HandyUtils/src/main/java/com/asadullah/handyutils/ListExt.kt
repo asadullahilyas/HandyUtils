@@ -27,3 +27,7 @@ inline fun <reified T> List<T>.chunked(chunkSize: Int): List<List<T>> {
         }
     }
 }
+
+fun <T> List<T>.ifCondition(condition: Boolean, ifCondition: (thisList: List<T>) -> List<T>, elseCondition: (thisList: List<T>) -> List<T>): List<T> {
+    return if (condition) ifCondition(this) else elseCondition(this)
+}
