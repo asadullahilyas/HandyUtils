@@ -11,7 +11,7 @@ afterEvaluate {
                 from (components["release"])
                 groupId = "com.github.asadullahilyas"
                 artifactId = "HandyUtils"
-                version = "1.0.5"
+                version = "1.0.6"
             }
         }
     }
