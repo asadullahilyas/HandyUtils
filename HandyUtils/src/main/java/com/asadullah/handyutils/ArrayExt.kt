@@ -27,3 +27,11 @@ inline fun <reified T> Array<T>.chunked(chunkSize: Int): Array<Array<out T>> {
         }
     }
 }
+
+inline fun <T> Array<T>.runIf(condition: Boolean, runIf: (thisList: Array<T>) -> Array<T>): Array<T> {
+    return if (condition) runIf(this) else this
+}
+
+inline fun <T> Array<T>.runIf(condition: Boolean, runIf: (thisList: Array<T>) -> Array<T>, runElse: (thisList: Array<T>) -> Array<T>): Array<T> {
+    return if (condition) runIf(this) else runElse(this)
+}

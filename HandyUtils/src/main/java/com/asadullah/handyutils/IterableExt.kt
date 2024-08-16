@@ -17,3 +17,11 @@ fun <T, R> Iterable<T>.findWithObjectOrNull(predicate: (T) -> R?): R? {
         null
     }
 }
+
+inline fun <T> Iterable<T>.runIf(condition: Boolean, runIf: (thisList: Iterable<T>) -> Iterable<T>): Iterable<T> {
+    return if (condition) runIf(this) else this
+}
+
+inline fun <T> Iterable<T>.runIf(condition: Boolean, runIf: (thisList: Iterable<T>) -> Iterable<T>, runElse: (thisList: Iterable<T>) -> Iterable<T>): Iterable<T> {
+    return if (condition) runIf(this) else runElse(this)
+}

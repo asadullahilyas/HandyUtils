@@ -28,6 +28,10 @@ inline fun <reified T> List<T>.chunked(chunkSize: Int): List<List<T>> {
     }
 }
 
-fun <T> List<T>.ifCondition(condition: Boolean, ifCondition: (thisList: List<T>) -> List<T>, elseCondition: (thisList: List<T>) -> List<T>): List<T> {
-    return if (condition) ifCondition(this) else elseCondition(this)
+inline fun <T> List<T>.runOnListIf(condition: Boolean, runIf: (thisList: List<T>) -> List<T>): List<T> {
+    return if (condition) runIf(this) else this
+}
+
+inline fun <T> List<T>.runOnListIf(condition: Boolean, runIf: (thisList: List<T>) -> List<T>, runElse: (thisList: List<T>) -> List<T>): List<T> {
+    return if (condition) runIf(this) else runElse(this)
 }
