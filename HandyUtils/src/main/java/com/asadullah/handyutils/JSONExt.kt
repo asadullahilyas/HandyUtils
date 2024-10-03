@@ -16,3 +16,11 @@ fun JSONObject.toMap(): Map<String, *> = keys().asSequence().associateWith {
         else            -> value
     }
 }
+
+fun JSONObject?.isNullOrEmpty() = this == null || this.length() == 0
+
+fun JSONObject?.isNotEmpty() = this.isNullOrEmpty().not()
+
+fun JSONArray?.isNullOrEmpty() = this == null || this.length() == 0
+
+fun JSONArray?.isNotEmpty() = this.isNullOrEmpty().not()
