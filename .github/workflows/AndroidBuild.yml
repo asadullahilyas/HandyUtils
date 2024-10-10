@@ -1,56 +1,69 @@
-# This is a basic workflow to help you get started with Actions
 name: Push on GH-Actions
 
-# Controls when the workflow will run
 on:
-  # Triggers the workflow on push or pull request events but only for the "master" branch
   push:
     branches: ["GH-Actions"]
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
-  build:
-    name: Build AAR
-    # The type of runner that the job will run on
+
+  test:
+    name: Execute Test Cases
     runs-on: ubuntu-latest
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - name: Checkout
         uses: actions/checkout@v4.1.1
-
       - name: Setup Java JDK
         uses: actions/setup-java@v4.0.0
         with:
           java-version: '17'
           distribution: 'adopt'
-
       - name: Change wrapper permissions
         run: chmod +x ./gradlew
-
       - name: Run unit tests
         run: ./gradlew clean testDebug
 
+  build:
+    name: Build AAR File
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4.1.1
+      - name: Setup Java JDK
+        uses: actions/setup-java@v4.0.0
+        with:
+          java-version: '17'
+          distribution: 'adopt'
+      - name: Change wrapper permissions
+        run: chmod +x ./gradlew
       - name: Build Release AAR
-        run: ./gradlew :HandyUtils:assembleRelease  # Replace 'libraryModule' with your module's name
-
+        run: ./gradlew :HandyUtils:assembleRelease
       - name: Upload AAR to GitHub Actions artifacts
         uses: actions/upload-artifact@v3
         with:
           name: library-release.aar
-          path: HandyUtils/build/outputs/aar/HandyUtils-release.aar  # Adjust path based on your module and build type
+          path: HandyUtils/build/outputs/aar/HandyUtils-release.aar
+
+  createTag:
+    name: Creating New Tags
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Create Tag
+        run: git tag 1.0.7.1
+      - name: Push Tag
+        run: git push origin 1.0.7.1
 
   release:
     name: Create GitHub Release
-    needs: build  # Run only if the build job succeeds
+    needs: createTag
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v4.1.1
-
       - name: Upload AAR to GitHub Release
         uses: softprops/action-gh-release@v2.0.8
         with:
-          files: HandyUtils/build/outputs/aar/HandyUtils-release.aar  # Path to your AAR file
+          files: HandyUtils/build/outputs/aar/HandyUtils-release.aar
+          tag_name: 1.0.7.1 #${{ github.ref }}
+          name: Release 1.0.7.1
