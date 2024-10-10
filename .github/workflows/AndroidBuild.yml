@@ -11,6 +11,7 @@ on:
 jobs:
   # This workflow contains a single job called "build"
   build:
+    name: Build AAR
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
     # Steps represent a sequence of tasks that will be executed as part of the job
@@ -31,12 +32,25 @@ jobs:
       - name: Run unit tests
         run: ./gradlew clean testDebug
 
-      # Runs a single command using the runners shell
-#      - name: Build with Gradle
-#        run: ./gradlew build
-#
-#      - name: Upload a Build Artifact
-#        uses: actions/upload-artifact@v3.1.3
-#        with:
-#          name: AndroidCICD.apk
-#          path: app/build/outputs/apk/debug/app-debug.apk
+      - name: Build Release AAR
+        run: ./gradlew :HandyUtils:assembleRelease  # Replace 'libraryModule' with your module's name
+
+      - name: Upload AAR to GitHub Actions artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: library-release.aar
+          path: HandyUtils/build/outputs/aar/HandyUtils-release.aar  # Adjust path based on your module and build type
+
+  release:
+    name: Create GitHub Release
+    needs: build  # Run only if the build job succeeds
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4.1.1
+
+      - name: Upload AAR to GitHub Release
+        uses: softprops/action-gh-release@v2.0.8
+        with:
+          files: HandyUtils/build/outputs/aar/HandyUtils-release.aar  # Path to your AAR file
