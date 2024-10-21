@@ -4,14 +4,26 @@ import android.os.Build
 import androidx.annotation.RequiresApi
 import java.util.Base64
 
+/**
+ * @param strict: By default strict is set to true. If you set it to false, strings like `"null"` will also return true.
+ */
 fun String?.isNullOrEmptyOrBlank(strict: Boolean = true) = this.isNullOrEmpty() || this.isBlank() || (strict.not() && "null".equals(this, true))
 
+/**
+ * @param strict: By default strict is set to true. If you set it to false, strings like `"null"` will return false.
+ */
 fun String?.isNeitherNullNorEmptyNorBlank(strict: Boolean = true) = this.isNullOrEmptyOrBlank(strict).not()
 
+/**
+ * @param strict: By default strict is set to true. If you set it to false, strings like `"null"` will be converted to null.
+ */
 fun String?.toNullIfEmptyOrBlank(strict: Boolean = true): String? {
     return if (isNullOrEmptyOrBlank(strict)) null else this
 }
 
+/**
+ * @param strict: By default strict is set to true. If you set it to false, strings like `"null"` will be considered and returned as null.
+ */
 inline fun <T> String?.ifNeitherNullNorEmptyNorBlank(provider: (String) -> T?, strict: Boolean = true): T? {
     return if (isNeitherNullNorEmptyNorBlank(strict)) {
         provider(this!!)
