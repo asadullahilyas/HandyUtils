@@ -24,7 +24,7 @@ fun String?.toNullIfEmptyOrBlank(strict: Boolean = true): String? {
 /**
  * @param strict: By default strict is set to true. If you set it to false, strings like `"null"` will be considered and returned as null.
  */
-inline fun <T> String?.ifNeitherNullNorEmptyNorBlank(provider: (String) -> T?, strict: Boolean = true): T? {
+inline fun <T> String?.ifNeitherNullNorEmptyNorBlank(strict: Boolean = true, provider: (String) -> T?): T? {
     return if (isNeitherNullNorEmptyNorBlank(strict)) {
         provider(this!!)
     } else null
