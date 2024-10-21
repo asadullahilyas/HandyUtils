@@ -11,7 +11,7 @@ afterEvaluate {
                 from (components["release"])
                 groupId = "com.github.asadullahilyas"
                 artifactId = "HandyUtils"
-                version = "1.0.7"
+                version = "1.0.8"
             }
         }
     }
@@ -19,7 +19,7 @@ afterEvaluate {
 
 android {
     namespace = "com.asadullah.handyutils"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         minSdk = 23

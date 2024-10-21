@@ -4,16 +4,16 @@ import android.os.Build
 import androidx.annotation.RequiresApi
 import java.util.Base64
 
-fun String?.isNullOrEmptyOrBlank() = this.isNullOrEmpty() || this.isBlank()
+fun String?.isNullOrEmptyOrBlank(strict: Boolean = true) = this.isNullOrEmpty() || this.isBlank() || (strict.not() && "null".equals(this, true))
 
-fun String?.isNeitherNullNorEmptyNorBlank() = this.isNullOrEmptyOrBlank().not()
+fun String?.isNeitherNullNorEmptyNorBlank(strict: Boolean = true) = this.isNullOrEmptyOrBlank(strict).not()
 
-fun String?.toNullIfEmptyOrBlank(): String? {
-    return if (isNullOrEmptyOrBlank()) null else this
+fun String?.toNullIfEmptyOrBlank(strict: Boolean = true): String? {
+    return if (isNullOrEmptyOrBlank(strict)) null else this
 }
 
-inline fun <T> String?.ifNeitherNullNorEmptyNorBlank(provider: (String) -> T?): T? {
-    return if (isNeitherNullNorEmptyNorBlank()) {
+inline fun <T> String?.ifNeitherNullNorEmptyNorBlank(provider: (String) -> T?, strict: Boolean = true): T? {
+    return if (isNeitherNullNorEmptyNorBlank(strict)) {
         provider(this!!)
     } else null
 }

@@ -1,5 +1,6 @@
 package com.asadullah.handyutils
 
+import org.junit.Assert
 import org.junit.Test
 
 import org.junit.Assert.*
@@ -20,5 +21,59 @@ class FunctionTester {
             )
             .filter { it > 10 }
             .also { println(it) }
+    }
+
+    @Test
+    fun `String null or empty or blank with null`() {
+        val str: String? = null
+        assertEquals(true, str.isNullOrEmptyOrBlank())
+    }
+
+    @Test
+    fun `String null or empty or blank with empty`() {
+        val str: String = ""
+        assertEquals(true, str.isNullOrEmptyOrBlank())
+    }
+
+    @Test
+    fun `String null or empty or blank with blank`() {
+        val str: String = "  "
+        assertEquals(true, str.isNullOrEmptyOrBlank())
+    }
+
+    @Test
+    fun `String null or empty or blank with null string but strict true`() {
+        val str: String = "null"
+        assertEquals(false, str.isNullOrEmptyOrBlank())
+    }
+
+    @Test
+    fun `String null or empty or blank with null string but strict false`() {
+        val str: String = "null"
+        assertEquals(true, str.isNullOrEmptyOrBlank(false))
+    }
+
+    @Test
+    fun `String null or empty or blank with strict false with different case of null`() {
+        val str: String = "Null"
+        assertEquals(true, str.isNullOrEmptyOrBlank(false))
+    }
+
+    @Test
+    fun `String null or empty or blank with actual string`() {
+        val str: String = "Asadullah"
+        assertEquals(false, str.isNullOrEmptyOrBlank())
+    }
+
+    @Test
+    fun `String neither null nor empty nor blank with null string but strict true`() {
+        val str: String = "null"
+        assertEquals(true, str.isNeitherNullNorEmptyNorBlank())
+    }
+
+    @Test
+    fun `String neither null nor empty nor blank with null string but strict false`() {
+        val str: String = "null"
+        assertEquals(false, str.isNeitherNullNorEmptyNorBlank(false))
     }
 }
