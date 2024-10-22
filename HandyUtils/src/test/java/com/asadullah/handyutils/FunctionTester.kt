@@ -76,4 +76,20 @@ class FunctionTester {
         val str: String = "null"
         assertEquals(false, str.isNeitherNullNorEmptyNorBlank(false))
     }
+
+    @Test
+    fun `String if neither null nor empty nor blank with null string`() {
+        val str: String = "null"
+        assertEquals("null", str.ifNeitherNullNorEmptyNorBlank {
+            it
+        })
+    }
+
+    @Test
+    fun `String if neither null nor empty nor blank with null string but strict false`() {
+        val str: String = "null"
+        assertEquals(null, str.ifNeitherNullNorEmptyNorBlank(false) {
+            it
+        })
+    }
 }
