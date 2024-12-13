@@ -5,6 +5,9 @@ import android.graphics.RectF
 import kotlin.math.max
 import kotlin.math.min
 
+val Rect.area: Int
+    get() = this.width() * this.height()
+
 fun List<Rect>.encapsulate(): Rect {
 
     var left = Int.MIN_VALUE
@@ -25,6 +28,9 @@ fun List<Rect>.encapsulate(): Rect {
 
     return Rect(left, top, right, bottom)
 }
+
+val RectF.area: Float
+    get() = this.width() * this.height()
 
 fun List<RectF>.encapsulate(): RectF {
 
