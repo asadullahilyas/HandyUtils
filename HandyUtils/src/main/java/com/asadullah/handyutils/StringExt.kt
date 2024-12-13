@@ -105,11 +105,11 @@ fun String?.toDigitsWithGroupSeparator(locale: Locale = Locale.getDefault()) = t
  *
  * For Locale `en_PK`
  *
- * "Rs: 7,000,000.50".toDigitsWithGroupSeparator() would return "7000000.50"
+ * "Rs: 7,000,000.50".toDigitsWithMonetaryDecimalSeparator() would return "7000000.50"
  *
  * For Locale `es`
  *
- * "€: 7.000.000,50".toDigitsWithGroupSeparator() would return "7000000,50"
+ * "€: 7.000.000,50".toDigitsWithMonetaryDecimalSeparator() would return "7000000,50"
  *
  * For more info, visit [here](https://www.localeplanet.com/java/)
  *
@@ -127,11 +127,11 @@ fun String?.toDigitsWithMonetaryDecimalSeparator(locale: Locale = Locale.getDefa
  *
  * For Locale `en_PK`
  *
- * "Rs: 7,000,000.50".toDigitsWithGroupSeparator() would return "7,000,00050"
+ * "Rs: 7,000,000.50".toDigitsWithMonetaryGroupSeparator() would return "7,000,00050"
  *
  * For Locale `es`
  *
- * "€: 7.000.000,50".toDigitsWithGroupSeparator() would return "7.000.00050"
+ * "€: 7.000.000,50".toDigitsWithMonetaryGroupSeparator() would return "7.000.00050"
  *
  * For more info, visit [here](https://www.localeplanet.com/java/)
  *
