@@ -6,7 +6,10 @@ import android.graphics.Bitmap.CompressFormat
 import android.util.Base64
 import java.io.ByteArrayOutputStream
 import java.io.File
+import java.text.NumberFormat
 import java.util.Date
+import kotlin.math.max
+import kotlin.math.roundToInt
 
 fun Bitmap.save(context: Context, fileName: String = Date().time.toString(), compressFormat: CompressFormat = CompressFormat.JPEG, quality: Int = 100): File? {
 
@@ -59,26 +62,56 @@ fun Bitmap.bitmapCompression(quality: Int): Bitmap {
     }
     val newWidth = this.width.toFloat() * compressionFactor
     val newHeight = this.height.toFloat() * compressionFactor
-    return resize(newWidth.toInt(), newHeight.toInt())
+    val maxSide = max(newWidth, newHeight)
+    return resize(maxSide.toInt())
 }
 
-fun Bitmap.resize(maxWidth: Int, maxHeight: Int): Bitmap {
-    if (maxHeight <= 0 || maxWidth <= 0) {
+/**
+ * This function will try to reduce the size of current Bitmap and
+ * make its one side (width or height) at least equal to maxSide.
+ * This function will keep aspect ratio intact. Following is the
+ * edge case where aspect ratio will suffer:
+ *
+ * Original Bitmap size: width = 100, height = 1, maxSide = 50
+ *
+ * Result Bitmap size: width = 50, height = 1
+ *
+ * Note that in this case, aspect ratio has been changed.
+ *
+ * @param maxSide: Maximum side you want your Bitmap to have. If
+ * 0 or a negative number is passed, Bitmap is returned as it is.
+ * If maxSide is greater than both sides of current Bitmap, it is
+ * returned as it is.
+ */
+fun Bitmap.resize(maxSide: Int): Bitmap {
+
+    // If maxSide 0 or a negative number, then return Bitmap as it is.
+    if (maxSide <= 0) {
         return this
     }
 
-    val width = width
-    val height = height
-    val ratioBitmap = width.toFloat() / height.toFloat()
-    val ratioMax = maxWidth.toFloat() / maxHeight.toFloat()
-    var finalWidth = maxWidth
-    var finalHeight = maxHeight
-    if (ratioMax > ratioBitmap) {
-        finalWidth = (maxHeight.toFloat() * ratioBitmap).toInt()
-    } else {
-        finalHeight = (maxWidth.toFloat() / ratioBitmap).toInt()
+    // If maxSide is greater than both width and height, then return
+    // Bitmap as it is, because we are not scaling up the Bitmap.
+    if (maxSide >= width && maxSide >= height) {
+        return this
     }
-    return Bitmap.createScaledBitmap(this, finalWidth, finalHeight, true)
+
+    val (newWidth, newHeight) = if (width > height) {
+        val newHeight = maxSide / (width.toFloat() / height.toFloat())
+        maxSide.toFloat() to newHeight
+    } else if (height > width) {
+        val newWidth = maxSide / (height.toFloat() / width.toFloat())
+        newWidth to maxSide.toFloat()
+    } else {
+        maxSide.toFloat() to maxSide.toFloat()
+    }
+
+    return Bitmap.createScaledBitmap(
+        this,
+        max(newWidth.toInt(), 1), // If newWidth turns out to become 0, then use 1
+        max(newHeight.toInt(), 1), // If newHeight turns out to become 0, then use 1
+        true
+    )
 }
 
 fun Bitmap.toByteArray(compressFormat: CompressFormat = CompressFormat.JPEG, quality: Int = 100): ByteArray {
