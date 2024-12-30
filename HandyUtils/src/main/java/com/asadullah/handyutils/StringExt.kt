@@ -1,8 +1,12 @@
 package com.asadullah.handyutils
 
 import android.icu.text.DecimalFormatSymbols
+import android.net.Uri
 import android.os.Build
 import androidx.annotation.RequiresApi
+import java.net.URLDecoder
+import java.net.URLEncoder
+import java.nio.charset.Charset
 import java.util.Base64
 import java.util.Locale
 
@@ -175,4 +179,12 @@ fun String?.toLettersOrDigits() = this?.filter { it.isLetterOrDigit() }
 @RequiresApi(Build.VERSION_CODES.O)
 fun String.decodeFromBase64String(): ByteArray {
     return Base64.getDecoder().decode(this)
+}
+
+fun String.urlEncode(charset: Charset = Charsets.UTF_8): String {
+    return if (SDKHelper.hasAndroid33()) URLEncoder.encode(this, charset) else Uri.encode(this)
+}
+
+fun String.urlDecode(charset: Charset = Charsets.UTF_8): String {
+    return if (SDKHelper.hasAndroid33()) URLDecoder.decode(this, charset) else Uri.decode(this)
 }
