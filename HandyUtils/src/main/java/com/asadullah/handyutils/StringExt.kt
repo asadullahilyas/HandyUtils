@@ -9,16 +9,35 @@ import java.net.URLEncoder
 import java.nio.charset.Charset
 import java.util.Base64
 import java.util.Locale
+import kotlin.contracts.ExperimentalContracts
+import kotlin.contracts.contract
+import kotlin.text.isNullOrEmpty
 
 /**
  * @param strict: By default strict is set to true. If you set it to false, strings like `"null"` will also return true.
  */
-fun String?.isNullOrEmptyOrBlank(strict: Boolean = true) = this.isNullOrEmpty() || this.isBlank() || (strict.not() && "null".equals(this, true))
+@OptIn(ExperimentalContracts::class)
+fun String?.isNullOrEmptyOrBlank(strict: Boolean = true): Boolean {
+
+    contract {
+        returns(false) implies (this@isNullOrEmptyOrBlank != null)
+    }
+
+    return this.isNullOrEmpty() || this.isBlank() || (strict.not() && "null".equals(this, true))
+}
 
 /**
  * @param strict: By default strict is set to true. If you set it to false, strings like `"null"` will return false.
  */
-fun String?.isNeitherNullNorEmptyNorBlank(strict: Boolean = true) = this.isNullOrEmptyOrBlank(strict).not()
+@OptIn(ExperimentalContracts::class)
+fun String?.isNeitherNullNorEmptyNorBlank(strict: Boolean = true): Boolean {
+
+    contract {
+        returns(true) implies (this@isNeitherNullNorEmptyNorBlank != null)
+    }
+
+    return this.isNullOrEmptyOrBlank(strict).not()
+}
 
 /**
  * @param strict: By default strict is set to true. If you set it to false, strings like `"null"` will be converted to null.
@@ -32,7 +51,7 @@ fun String?.toNullIfEmptyOrBlank(strict: Boolean = true): String? {
  */
 inline fun <T> String?.ifNeitherNullNorEmptyNorBlank(strict: Boolean = true, provider: (String) -> T?): T? {
     return if (isNeitherNullNorEmptyNorBlank(strict)) {
-        provider(this!!)
+        provider(this)
     } else null
 }
 
