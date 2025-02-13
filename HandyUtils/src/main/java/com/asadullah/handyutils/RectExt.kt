@@ -8,6 +8,56 @@ import kotlin.math.min
 val Rect.area: Int
     get() = this.width() * this.height()
 
+fun Rect.increaseBy(
+    allSides: Int
+): Rect {
+    return Rect(
+        this.left - allSides,
+        this.top - allSides,
+        this.right + allSides,
+        this.bottom + allSides,
+    )
+}
+
+fun Rect.increaseBy(
+    left: Int,
+    top: Int,
+    right: Int,
+    bottom: Int
+): Rect {
+    return Rect(
+        this.left - left,
+        this.top - top,
+        this.right + right,
+        this.bottom + bottom,
+    )
+}
+
+fun Rect.decreaseBy(
+    allSides: Int
+): Rect {
+    return Rect(
+        this.left + allSides,
+        this.top + allSides,
+        this.right - allSides,
+        this.bottom - allSides,
+    )
+}
+
+fun Rect.decreaseBy(
+    left: Int,
+    top: Int,
+    right: Int,
+    bottom: Int
+): Rect {
+    return Rect(
+        this.left + left,
+        this.top + top,
+        this.right - right,
+        this.bottom - bottom,
+    )
+}
+
 fun List<Rect>.encapsulate(): Rect {
 
     var left = Int.MIN_VALUE
@@ -31,6 +81,56 @@ fun List<Rect>.encapsulate(): Rect {
 
 val RectF.area: Float
     get() = this.width() * this.height()
+
+fun RectF.increaseBy(
+    allSides: Float
+): RectF {
+    return RectF(
+        this.left - allSides,
+        this.top - allSides,
+        this.right + allSides,
+        this.bottom + allSides,
+    )
+}
+
+fun RectF.increaseBy(
+    left: Float,
+    top: Float,
+    right: Float,
+    bottom: Float
+): RectF {
+    return RectF(
+        this.left - left,
+        this.top - top,
+        this.right + right,
+        this.bottom + bottom,
+    )
+}
+
+fun RectF.decreaseBy(
+    allSides: Float
+): RectF {
+    return RectF(
+        this.left + allSides,
+        this.top + allSides,
+        this.right - allSides,
+        this.bottom - allSides,
+    )
+}
+
+fun RectF.decreaseBy(
+    left: Float,
+    top: Float,
+    right: Float,
+    bottom: Float
+): RectF {
+    return RectF(
+        this.left + left,
+        this.top + top,
+        this.right - right,
+        this.bottom - bottom,
+    )
+}
 
 fun List<RectF>.encapsulate(): RectF {
 
