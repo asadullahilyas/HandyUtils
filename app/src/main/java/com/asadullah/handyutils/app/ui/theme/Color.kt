@@ -1,4 +1,4 @@
-package com.asadullah.handyutils.ui.theme
+package com.asadullah.handyutils.app.ui.theme
 
 import androidx.compose.ui.graphics.Color
 

@@ -1,4 +1,4 @@
-package com.asadullah.handyutils.ui.theme
+package com.asadullah.handyutils.app.ui.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle

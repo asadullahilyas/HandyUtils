@@ -3,6 +3,7 @@ package com.asadullah.handyutils
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Bitmap.CompressFormat
+import android.graphics.Matrix
 import android.util.Base64
 import java.io.ByteArrayOutputStream
 import java.io.File
@@ -10,6 +11,7 @@ import java.text.NumberFormat
 import java.util.Date
 import kotlin.math.max
 import kotlin.math.roundToInt
+import androidx.core.graphics.scale
 
 fun Bitmap.save(context: Context, fileName: String = Date().time.toString(), compressFormat: CompressFormat = CompressFormat.JPEG, quality: Int = 100): File? {
 
@@ -106,10 +108,29 @@ fun Bitmap.resize(maxSide: Int): Bitmap {
         maxSide.toFloat() to maxSide.toFloat()
     }
 
-    return Bitmap.createScaledBitmap(
+    return this.scale(max(newWidth.toInt(), 1), max(newHeight.toInt(), 1))
+}
+
+fun Bitmap.rotateClockwise(angle: Float): Bitmap {
+    return Bitmap.createBitmap(
         this,
-        max(newWidth.toInt(), 1), // If newWidth turns out to become 0, then use 1
-        max(newHeight.toInt(), 1), // If newHeight turns out to become 0, then use 1
+        0,
+        0,
+        this.width,
+        this.height,
+        Matrix().apply { postRotate(angle) },
+        true
+    )
+}
+
+fun Bitmap.rotateAnticlockwise(angle: Float): Bitmap {
+    return Bitmap.createBitmap(
+        this,
+        0,
+        0,
+        this.width,
+        this.height,
+        Matrix().apply { postRotate(360 - angle) },
         true
     )
 }

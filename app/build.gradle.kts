@@ -1,15 +1,15 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
-    alias(libs.plugins.kotlin.compose)
+//    alias(libs.plugins.kotlin.compose)
 }
 
 android {
-    namespace = "com.asadullah.handyutils"
+    namespace = "com.asadullah.handyutils.app"
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.asadullah.handyutils"
+        applicationId = "com.asadullah.handyutils.app"
         minSdk = 23
         targetSdk = 35
         versionCode = 1
@@ -38,7 +38,7 @@ android {
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.1"
+        kotlinCompilerExtensionVersion = "1.5.15"
     }
     packaging {
         resources {
