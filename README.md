@@ -1,7 +1,7 @@
 # HandyUtils
 Kotlin and Android functions to make code better and life easier
 
-[![](https://jitpack.io/v/asadullahilyas/HandyUtils.svg)](https://jitpack.io/#asadullahilyas/HandyUtils)
+[//]: # ([![]&#40;https://jitpack.io/v/asadullahilyas/HandyUtils.svg&#41;]&#40;https://jitpack.io/#asadullahilyas/HandyUtils&#41;)
 
 ## Project Level Gradle
 
@@ -30,14 +30,14 @@ allprojects {
 ### Groovy
 ```` Groovy
 dependencies {
-    implementation 'com.github.asadullahilyas:HandyUtils:1.1.5'
+    implementation 'com.github.asadullahilyas:HandyUtils:1.1.8'
 }
 ````
 
 ### Kotlin
 ``` Kotlin
 dependencies {
-    implementation("com.github.asadullahilyas:HandyUtils:1.1.5")
+    implementation("com.github.asadullahilyas:HandyUtils:1.1.8")
 }
 ```
 
@@ -98,6 +98,10 @@ Resize or compress bitmap?
 
     bitmap.resize(400) // Function will make sure that large side of the bitmap is 400, keeping the aspect ratio intact
     bitmap.bitmapCompression(50) // Function will reduce the size of bitmap to 50%
+
+Rotate a bitmap?
+
+- `bitmap.rotateClockwise(90.0F)`
 
 ### CoroutineScope Extensions
 
