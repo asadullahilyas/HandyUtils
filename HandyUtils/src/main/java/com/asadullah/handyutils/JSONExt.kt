@@ -2,6 +2,8 @@ package com.asadullah.handyutils
 
 import org.json.JSONArray
 import org.json.JSONObject
+import kotlin.contracts.ExperimentalContracts
+import kotlin.contracts.contract
 
 fun JSONObject.toMap(): Map<String, *> = keys().asSequence().associateWith {
     when (val value = this[it])
@@ -17,13 +19,45 @@ fun JSONObject.toMap(): Map<String, *> = keys().asSequence().associateWith {
     }
 }
 
-fun JSONObject?.isNullOrEmpty() = this == null || this.length() == 0
+@OptIn(ExperimentalContracts::class)
+fun JSONObject?.isNullOrEmpty(): Boolean {
 
-fun JSONObject?.isNotEmpty() = this.isNullOrEmpty().not()
+    contract {
+        returns(false) implies (this@isNullOrEmpty != null)
+    }
 
-fun JSONArray?.isNullOrEmpty() = this == null || this.length() == 0
+    return this == null || this.length() == 0
+}
 
-fun JSONArray?.isNotEmpty() = this.isNullOrEmpty().not()
+@OptIn(ExperimentalContracts::class)
+fun JSONObject?.isNotEmpty(): Boolean {
+
+    contract {
+        returns(true) implies (this@isNotEmpty != null)
+    }
+
+    return this.isNullOrEmpty().not()
+}
+
+@OptIn(ExperimentalContracts::class)
+fun JSONArray?.isNullOrEmpty(): Boolean {
+
+    contract {
+        returns(false) implies (this@isNullOrEmpty != null)
+    }
+
+    return this == null || this.length() == 0
+}
+
+@OptIn(ExperimentalContracts::class)
+fun JSONArray?.isNotEmpty(): Boolean {
+
+    contract {
+        returns(true) implies (this@isNotEmpty != null)
+    }
+
+    return this.isNullOrEmpty().not()
+}
 
 /**
  * If we execute the following code:
