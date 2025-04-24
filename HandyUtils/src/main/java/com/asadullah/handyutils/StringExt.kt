@@ -27,6 +27,11 @@ fun String?.isNullOrEmptyOrBlank(strict: Boolean = true): Boolean {
 }
 
 /**
+ * @param strict: By default strict is set to true. If you set it to false, strings like `"null"` will also return true.
+ */
+fun String?.nullEmptyBlank(strict: Boolean = true) = isNullOrEmptyOrBlank(strict)
+
+/**
  * @param strict: By default strict is set to true. If you set it to false, strings like `"null"` will return false.
  */
 @OptIn(ExperimentalContracts::class)
@@ -38,6 +43,11 @@ fun String?.isNeitherNullNorEmptyNorBlank(strict: Boolean = true): Boolean {
 
     return this.isNullOrEmptyOrBlank(strict).not()
 }
+
+/**
+ * @param strict: By default strict is set to true. If you set it to false, strings like `"null"` will return false.
+ */
+fun String?.notNullEmptyBlank(strict: Boolean = true) = isNeitherNullNorEmptyNorBlank(strict)
 
 /**
  * @param strict: By default strict is set to true. If you set it to false, strings like `"null"` will be converted to null.
