@@ -3,6 +3,10 @@ package com.asadullah.handyutils
 import android.os.Build
 import androidx.annotation.ChecksSdkIntAtLeast
 
+/**
+ * SDKHelper has been deprecated. Please use `AndroidVersion` class instead.
+ */
+@Deprecated(message = "Class `SDKHelper` has been deprecated. Please use `AndroidVersion` class instead.")
 object SDKHelper {
 
     @ChecksSdkIntAtLeast(api = Build.VERSION_CODES.M)

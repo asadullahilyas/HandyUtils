@@ -27,6 +27,7 @@ fun String?.isNullOrEmptyOrBlank(strict: Boolean = true): Boolean {
 }
 
 /**
+ * Convenient function for `isNullOrEmptyOrBlank`
  * @param strict: By default strict is set to true. If you set it to false, strings like `"null"` will also return true.
  */
 fun String?.nullEmptyBlank(strict: Boolean = true) = isNullOrEmptyOrBlank(strict)
@@ -45,6 +46,7 @@ fun String?.isNeitherNullNorEmptyNorBlank(strict: Boolean = true): Boolean {
 }
 
 /**
+ * Convenient function for `isNeitherNullNorEmptyNorBlank`
  * @param strict: By default strict is set to true. If you set it to false, strings like `"null"` will return false.
  */
 fun String?.notNullEmptyBlank(strict: Boolean = true) = isNeitherNullNorEmptyNorBlank(strict)
@@ -63,6 +65,14 @@ inline fun <T> String?.ifNeitherNullNorEmptyNorBlank(strict: Boolean = true, pro
     return if (isNeitherNullNorEmptyNorBlank(strict)) {
         provider(this)
     } else null
+}
+
+/**
+ * Convenient function for `isNeitherNullNorEmptyNorBlank`
+ * @param strict: By default strict is set to true. If you set it to false, strings like `"null"` will be considered and returned as null.
+ */
+inline fun <T> String?.ifNotNullEmptyBlank(strict: Boolean = true, provider: (String) -> T?): T? {
+    return ifNeitherNullNorEmptyNorBlank(strict, provider)
 }
 
 fun String.capitalizeWords() = this.lowercase().split(" ").joinToString(" ") { word -> word.replaceFirstChar { c -> c.uppercase() } }
@@ -211,9 +221,9 @@ fun String.decodeFromBase64String(): ByteArray {
 }
 
 fun String.urlEncode(charset: Charset = Charsets.UTF_8): String {
-    return if (SDKHelper.hasAndroid33()) URLEncoder.encode(this, charset) else Uri.encode(this)
+    return if (AndroidVersion.hasAndroid33()) URLEncoder.encode(this, charset) else Uri.encode(this)
 }
 
 fun String.urlDecode(charset: Charset = Charsets.UTF_8): String {
-    return if (SDKHelper.hasAndroid33()) URLDecoder.decode(this, charset) else Uri.decode(this)
+    return if (AndroidVersion.hasAndroid33()) URLDecoder.decode(this, charset) else Uri.decode(this)
 }
