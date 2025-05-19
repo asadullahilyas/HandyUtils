@@ -20,7 +20,7 @@ allprojects {
 allprojects {
     repositories {
         ...
-        maven { url = URI.create("https://jitpack.io") }
+        maven { url = uri("https://jitpack.io") }
     }
 }
 ````
@@ -30,14 +30,14 @@ allprojects {
 ### Groovy
 ```` Groovy
 dependencies {
-    implementation 'com.github.asadullahilyas:HandyUtils:1.1.9'
+    implementation 'com.github.asadullahilyas:HandyUtils:1.2.1'
 }
 ````
 
 ### Kotlin
 ``` Kotlin
 dependencies {
-    implementation("com.github.asadullahilyas:HandyUtils:1.1.9")
+    implementation("com.github.asadullahilyas:HandyUtils:1.2.1")
 }
 ```
 
