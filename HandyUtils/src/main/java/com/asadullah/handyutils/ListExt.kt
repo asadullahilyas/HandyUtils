@@ -36,12 +36,6 @@ inline fun <T> List<T>.runOnListIf(condition: Boolean, runIf: (thisList: List<T>
     return if (condition) runIf(this) else runElse(this)
 }
 
-fun <T> List<T>.toNullIfEmpty(): List<T>? {
-    return this.ifEmpty {
-        null
-    }
-}
-
 fun <T> List<T>?.toNullIfEmpty(): List<T>? {
     return this?.ifEmpty {
         null

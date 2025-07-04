@@ -36,12 +36,6 @@ inline fun <T> Array<T>.runIf(condition: Boolean, runIf: (thisList: Array<T>) ->
     return if (condition) runIf(this) else runElse(this)
 }
 
-fun <T> Array<T>.toNullIfEmpty(): Array<T>? {
-    return this.ifEmpty {
-        null
-    }
-}
-
 fun <T> Array<T>?.toNullIfEmpty(): Array<T>? {
     return this?.ifEmpty {
         null
