@@ -35,3 +35,15 @@ inline fun <T> List<T>.runOnListIf(condition: Boolean, runIf: (thisList: List<T>
 inline fun <T> List<T>.runOnListIf(condition: Boolean, runIf: (thisList: List<T>) -> List<T>, runElse: (thisList: List<T>) -> List<T>): List<T> {
     return if (condition) runIf(this) else runElse(this)
 }
+
+fun <T> List<T>.toNullIfEmpty(): List<T>? {
+    return this.ifEmpty {
+        null
+    }
+}
+
+fun <T> List<T>?.toNullIfEmpty(): List<T>? {
+    return this?.ifEmpty {
+        null
+    }
+}

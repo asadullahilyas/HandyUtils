@@ -77,7 +77,13 @@ inline fun <T> String?.ifNotNullEmptyBlank(strict: Boolean = true, provider: (St
 
 fun String.capitalizeWords() = this.lowercase().split(" ").joinToString(" ") { word -> word.replaceFirstChar { c -> c.uppercase() } }
 
+fun String.removeSpaces() = this.replace(" ", "")
 fun String?.removeSpaces() = this?.replace(" ", "")
+
+/**
+ * Convert the given string into a string that only contains letters.
+ */
+fun String.toLetters() = this.filter { it.isLetter() }
 
 /**
  * Convert the given string into a string that only contains letters.
@@ -87,7 +93,20 @@ fun String?.toLetters() = this?.filter { it.isLetter() }
 /**
  * Convert the given string into a string that only contains digits.
  */
+fun String.toDigits() = this.filter { it.isDigit() }
+
+/**
+ * Convert the given string into a string that only contains digits.
+ */
 fun String?.toDigits() = this?.filter { it.isDigit() }
+
+/**
+ * Convert the given string into a string that only contains digits or points.
+ * An example would be:
+ *
+ * "13.98 m/s".toDigitsWithPoint() would return "13.98"
+ */
+fun String.toDigitsWithPoint() = this.filter { it.isDigit() || it == '.' }
 
 /**
  * Convert the given string into a string that only contains digits or points.
@@ -115,8 +134,52 @@ fun String?.toDigitsWithPoint() = this?.filter { it.isDigit() || it == '.' }
  * [https://www.localeplanet.com/java/](https://www.localeplanet.com/java/)
  */
 @RequiresApi(Build.VERSION_CODES.N)
+fun String.toDigitsWithDecimalSeparator(locale: Locale = Locale.getDefault()) = this.filter {
+    it.isDigit() || it == DecimalFormatSymbols.getInstance(locale).decimalSeparator
+}
+
+/**
+ * Convert the given string into a string that only contains digits or the
+ * decimal separator, depending upon provided Locale.
+ * An example would be:
+ *
+ * For Locale `en_PK`
+ *
+ * "13.98 m/s".toDigitsWithDecimalSeparator() would return "13.98"
+ *
+ * For Locale `es`
+ *
+ * "13,98 m/s".toDigitsWithDecimalSeparator() would return "13,98"
+ *
+ * For more info, visit [here](https://www.localeplanet.com/java/)
+ *
+ * [https://www.localeplanet.com/java/](https://www.localeplanet.com/java/)
+ */
+@RequiresApi(Build.VERSION_CODES.N)
 fun String?.toDigitsWithDecimalSeparator(locale: Locale = Locale.getDefault()) = this?.filter {
     it.isDigit() || it == DecimalFormatSymbols.getInstance(locale).decimalSeparator
+}
+
+/**
+ * Convert the given string into a string that only contains digits or the
+ * group separator, depending upon provided Locale.
+ * An example would be:
+ *
+ * For Locale `en_PK`
+ *
+ * "7,000,000.50".toDigitsWithGroupSeparator() would return "7,000,00050"
+ *
+ * For Locale `es`
+ *
+ * "7.000.000,50".toDigitsWithGroupSeparator() would return "7.000.00050"
+ *
+ * For more info, visit [here](https://www.localeplanet.com/java/)
+ *
+ * [https://www.localeplanet.com/java/](https://www.localeplanet.com/java/)
+ */
+@RequiresApi(Build.VERSION_CODES.N)
+fun String.toDigitsWithGroupSeparator(locale: Locale = Locale.getDefault()) = this.filter {
+    it.isDigit() || it == DecimalFormatSymbols.getInstance(locale).groupingSeparator
 }
 
 /**
@@ -159,8 +222,52 @@ fun String?.toDigitsWithGroupSeparator(locale: Locale = Locale.getDefault()) = t
  * [https://www.localeplanet.com/java/](https://www.localeplanet.com/java/)
  */
 @RequiresApi(Build.VERSION_CODES.N)
+fun String.toDigitsWithMonetaryDecimalSeparator(locale: Locale = Locale.getDefault()) = this.filter {
+    it.isDigit() || it == DecimalFormatSymbols.getInstance(locale).monetaryDecimalSeparator
+}
+
+/**
+ * Convert the given string into a string that only contains digits or the
+ * monetary decimal separator, depending upon provided Locale.
+ * An example would be:
+ *
+ * For Locale `en_PK`
+ *
+ * "Rs: 7,000,000.50".toDigitsWithMonetaryDecimalSeparator() would return "7000000.50"
+ *
+ * For Locale `es`
+ *
+ * "€: 7.000.000,50".toDigitsWithMonetaryDecimalSeparator() would return "7000000,50"
+ *
+ * For more info, visit [here](https://www.localeplanet.com/java/)
+ *
+ * [https://www.localeplanet.com/java/](https://www.localeplanet.com/java/)
+ */
+@RequiresApi(Build.VERSION_CODES.N)
 fun String?.toDigitsWithMonetaryDecimalSeparator(locale: Locale = Locale.getDefault()) = this?.filter {
     it.isDigit() || it == DecimalFormatSymbols.getInstance(locale).monetaryDecimalSeparator
+}
+
+/**
+ * Convert the given string into a string that only contains digits or the
+ * monetary group separator, depending upon provided Locale.
+ * An example would be:
+ *
+ * For Locale `en_PK`
+ *
+ * "Rs: 7,000,000.50".toDigitsWithMonetaryGroupSeparator() would return "7,000,00050"
+ *
+ * For Locale `es`
+ *
+ * "€: 7.000.000,50".toDigitsWithMonetaryGroupSeparator() would return "7.000.00050"
+ *
+ * For more info, visit [here](https://www.localeplanet.com/java/)
+ *
+ * [https://www.localeplanet.com/java/](https://www.localeplanet.com/java/)
+ */
+@RequiresApi(Build.VERSION_CODES.N)
+fun String.toDigitsWithMonetaryGroupSeparator(locale: Locale = Locale.getDefault()) = this.filter {
+    it.isDigit() || it == DecimalFormatSymbols.getInstance(locale).monetaryGroupingSeparator
 }
 
 /**
@@ -203,12 +310,42 @@ fun String?.toDigitsWithMonetaryGroupSeparator(locale: Locale = Locale.getDefaul
  * [https://www.localeplanet.com/java/](https://www.localeplanet.com/java/)
  */
 @RequiresApi(Build.VERSION_CODES.N)
+fun String.toDigitsWithMonetaryDecimalGroupSeparator(locale: Locale = Locale.getDefault()) = this.filter {
+    val formatter = DecimalFormatSymbols.getInstance(locale)
+    it.isDigit()
+            || it == formatter.monetaryDecimalSeparator
+            || it == formatter.monetaryGroupingSeparator
+}
+
+/**
+ * Convert the given string into a string that only contains digits or the
+ * monetary group separator, depending upon provided Locale.
+ * An example would be:
+ *
+ * For Locale `en_PK`
+ *
+ * "Rs: 7,000,000.50".toDigitsWithMonetaryDecimalGroupSeparator() would return "7,000,000.50"
+ *
+ * For Locale `es`
+ *
+ * "€: 7.000.000,50".toDigitsWithMonetaryDecimalGroupSeparator() would return "7.000.000,50"
+ *
+ * For more info, visit [here](https://www.localeplanet.com/java/)
+ *
+ * [https://www.localeplanet.com/java/](https://www.localeplanet.com/java/)
+ */
+@RequiresApi(Build.VERSION_CODES.N)
 fun String?.toDigitsWithMonetaryDecimalGroupSeparator(locale: Locale = Locale.getDefault()) = this?.filter {
     val formatter = DecimalFormatSymbols.getInstance(locale)
     it.isDigit()
             || it == formatter.monetaryDecimalSeparator
             || it == formatter.monetaryGroupingSeparator
 }
+
+/**
+ * Convert the given string into a string that only contains letters or digits.
+ */
+fun String.toLettersOrDigits() = this.filter { it.isLetterOrDigit() }
 
 /**
  * Convert the given string into a string that only contains letters or digits.
@@ -224,6 +361,14 @@ fun String.urlEncode(charset: Charset = Charsets.UTF_8): String {
     return if (AndroidVersion.hasAndroid33()) URLEncoder.encode(this, charset) else Uri.encode(this)
 }
 
+fun String?.urlEncode(charset: Charset = Charsets.UTF_8): String {
+    return if (AndroidVersion.hasAndroid33()) URLEncoder.encode(this, charset) else Uri.encode(this)
+}
+
 fun String.urlDecode(charset: Charset = Charsets.UTF_8): String {
+    return if (AndroidVersion.hasAndroid33()) URLDecoder.decode(this, charset) else Uri.decode(this)
+}
+
+fun String?.urlDecode(charset: Charset = Charsets.UTF_8): String {
     return if (AndroidVersion.hasAndroid33()) URLDecoder.decode(this, charset) else Uri.decode(this)
 }

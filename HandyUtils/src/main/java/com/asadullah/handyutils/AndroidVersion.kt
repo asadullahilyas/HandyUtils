@@ -86,4 +86,11 @@ object AndroidVersion {
     fun hasAndroidVanillaIceCream() = hasAndroidV()
     @ChecksSdkIntAtLeast(api = Build.VERSION_CODES.VANILLA_ICE_CREAM)
     fun hasAndroid35() = hasAndroidV()
+
+    @ChecksSdkIntAtLeast(api = Build.VERSION_CODES.BAKLAVA)
+    fun hasAndroidB() = Build.VERSION.SDK_INT >= Build.VERSION_CODES.BAKLAVA
+    @ChecksSdkIntAtLeast(api = Build.VERSION_CODES.BAKLAVA)
+    fun hasAndroidBaklava() = hasAndroidB()
+    @ChecksSdkIntAtLeast(api = Build.VERSION_CODES.BAKLAVA)
+    fun hasAndroid36() = hasAndroidB()
 }

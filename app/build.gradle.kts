@@ -6,12 +6,12 @@ plugins {
 
 android {
     namespace = "com.asadullah.handyutils.app"
-    compileSdk = 35
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "com.asadullah.handyutils.app"
         minSdk = 23
-        targetSdk = 35
+        targetSdk = 36
         versionCode = 1
         versionName = "1.0"
 
