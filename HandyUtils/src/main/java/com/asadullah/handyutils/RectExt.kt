@@ -1,5 +1,7 @@
 package com.asadullah.handyutils
 
+import android.graphics.Point
+import android.graphics.PointF
 import android.graphics.Rect
 import android.graphics.RectF
 import kotlin.math.max
@@ -7,6 +9,18 @@ import kotlin.math.min
 
 val Rect.area: Int
     get() = this.width() * this.height()
+
+val Rect.topLeft: Point
+    get() = Point(left, top)
+
+val Rect.topRight: Point
+    get() = Point(right, top)
+
+val Rect.bottomLeft: Point
+    get() = Point(left, bottom)
+
+val Rect.bottomRight: Point
+    get() = Point(right, bottom)
 
 fun Rect.increaseBy(
     allSides: Int
@@ -81,6 +95,18 @@ fun List<Rect>.encapsulate(): Rect {
 
 val RectF.area: Float
     get() = this.width() * this.height()
+
+val RectF.topLeft: PointF
+    get() = PointF(left, top)
+
+val RectF.topRight: PointF
+    get() = PointF(right, top)
+
+val RectF.bottomLeft: PointF
+    get() = PointF(left, bottom)
+
+val RectF.bottomRight: PointF
+    get() = PointF(right, bottom)
 
 fun RectF.increaseBy(
     allSides: Float
